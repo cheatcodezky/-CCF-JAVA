@@ -32,8 +32,14 @@ public class FindSingle {
                 hashtable.put(input[i],input[i]);
             }
         }
-        for (int i=0;i<input.length;i++)
-            if (hashtable.containsKey(input[i]))
-                System.out.print(input[i]+" ");
+//        for (int i=0;i<input.length;i++)
+//            if (hashtable.containsKey(input[i]))
+//                System.out.print(input[i]+" ");
+        Iterator iterator = hashtable.entrySet().iterator();
+        while(iterator.hasNext())
+        {
+            Map.Entry entry = (Map.Entry)iterator.next();
+            System.out.print(entry.getValue()+" ");
+        }
     }
 }
