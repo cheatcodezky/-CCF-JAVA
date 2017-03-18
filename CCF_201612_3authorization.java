@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * Created by max on 17-3-17.
+ * Created by ZhouKeyu on 17-3-17.
  */
 public class CCF_201612_3authorization {
     private static String[][] authority;
