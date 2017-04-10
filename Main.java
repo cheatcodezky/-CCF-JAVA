@@ -1,9 +1,7 @@
-import sun.nio.ch.sctp.SctpNet;
 
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Vector;
+
 
 /**
  * Created by max on 17-3-18.
@@ -11,27 +9,117 @@ import java.util.Vector;
 public class Main {
     public static void main(String[] arg)
     {
-        Hashtable<Integer,Integer> hashtable = new Hashtable<Integer,Integer>(3);
+
         Scanner scanner = new Scanner(System.in);
-        int number_content = scanner.nextInt();
-        int  number_relationship = scanner.nextInt();
-        scanner.nextLine();
-        boolean[][] myMap= new boolean[number_content+1][number_content+1];
-        int[] start=new int[number_relationship];
-        for (int i =0;i<number_relationship;i++)
+        int N = scanner.nextInt();
+        int[][] RC = new int[N][2];
+        ArrayList<Integer> x = new ArrayList<>();
+        ArrayList<Integer> y = new ArrayList<>();
+        ArrayList<Node> nodes = new ArrayList<>();
+        for (int i = 0 ; i<N;i++)
         {
-            String[] input =scanner.nextLine().split("\\ ");
-            start[i] = Integer.valueOf(input[0]);
-            myMap[Integer.valueOf(input[0])][Integer.valueOf(input[1])]=true;
-            myMap[Integer.valueOf(input[1])][Integer.valueOf(input[0])]=true;
+            RC[i][0] =scanner.nextInt();
+            RC[i][1] =scanner.nextInt();
+            Node newNode = new Node(RC[i][0],RC[i][1]);
+            if (!x.contains(RC[i][0]))
+            {
+                x.add(RC[i][0]);
+            }
+            else
+            {
+                int key = 0;
+                for (int j = 0 ; j<nodes.size();j++)
+                {
+
+                    Node tmp = nodes.get(j);
+                    if(tmp.x==RC[i][0]) {
+                        while (tmp.rightNode != null) {
+                            tmp = tmp.rightNode;
+                        }
+
+                        tmp.rightNode = newNode;
+                        key =1;
+                    }
+                    if (key ==1)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (!y.contains(RC[i][1]))
+                y.add(RC[i][1]);
+            else
+            {
+                int key =0 ;
+                for (int j = 0 ; j<nodes.size();j++)
+                {
+                    Node tmp = nodes.get(j);
+                    if(tmp.y==RC[i][1]) {
+                        while (tmp.donwNode != null) {
+                            tmp = tmp.donwNode;
+                        }
+
+                        tmp.donwNode = newNode;
+                        key =1;
+                    }
+                    if (key ==1)
+                        break;
+                }
+            }
+            nodes.add(newNode);
         }
-        
-//        for (int i = 0;i<number_relationship;i++)
-//        {
-//             if (hashtable.containsKey(start)||)
-//        }
+        int answer = 0;
+        for (int i =0 ;i<nodes.size();i++)
+        {
+            int x_count= 1;
+            int y_count =1;
+            int z_count = 0;
+            Node aim = nodes.get(i);
+            Node aim_test1 = nodes.get(i);
+            Node aim_test2 = nodes.get(i);
+            while (aim_test1.rightNode!=null)
+            {
+                x_count++;
+                aim_test1 = aim_test1.rightNode;
+            }
+            while(aim_test2.donwNode!=null)
+            {
+                y_count++;
+                aim_test2 = aim_test2.donwNode;
+            }
+            for (int z = i+1 ;z<nodes.size();z++) {
+                Node test_node = nodes.get(z);
+                if (Math.abs(test_node.x - aim.x) == Math.abs(test_node.y - aim.y)) {
+                    System.out.println("aim:"+aim.x+","+aim.y+" "+"test:"+test_node.x+","+test_node.y);
+                    z_count++;
+
+                }
+            }
+
+            answer = (answer+ jieci(x_count-1)+jieci(y_count-1)+z_count);
+        }
+        System.out.println(answer);
     }
-
-
+    static class Node{
+        public int x = 0 ;
+        public int y = 0 ;
+        public Node donwNode = null;
+        public Node rightNode = null;
+        public Node(int x,int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+    public static int jieci(int a)
+    {
+        if (a<1)
+        {
+            return 0;
+        }
+        int answer = 0;
+        for (int i= 1;i<=a;i++)
+            answer+=i;
+        return answer;
+    }
 
 }
