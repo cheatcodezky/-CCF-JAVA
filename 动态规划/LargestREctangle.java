@@ -16,19 +16,19 @@ public class LargestREctangle {
         while ((n = scanner.nextInt()) != 0) {
 
 
-            int h[] = new int[n];
+            long h[] = new long[n];
             int[] left = new int[n];
             int[] right = new int[n];
 
             for (int i = 0; i < n; i++) {
-                h[i] = scanner.nextInt();
+                h[i] = scanner.nextLong();
             }
             left[0] = 0;
             for (int i=1;i<n;i++)
             {
                left[i] = i;
                 int j = i;
-                while (j>0&&h[i]<=h[j-1])
+                while (j>0&&(h[i]<=h[j-1]))
                 {
                     j = left[j-1];
                 }
@@ -39,7 +39,7 @@ public class LargestREctangle {
             {
 
                 int j = i;
-                while(j<(n-1)&&h[i]<=h[j+1])
+                while(j<(n-1)&&(h[i]<=h[j+1]))
                 {
                     j = right[j+1];
                 }
@@ -55,7 +55,6 @@ public class LargestREctangle {
             }
             answer.add(max);
         }
-        System.out.println(Double.MAX_VALUE);
         while (!answer.isEmpty())
         {
             System.out.printf("%.0f\n",answer.get(0));
