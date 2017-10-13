@@ -1,19 +1,24 @@
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Scanner;
 
 /**
- * Created by max on 17-3-18.
+ * Created by 95112 on 10/9/2017.
  */
 public class Test {
+    private static HashMap<Integer,Student> students = new HashMap<>();
     public static void main(String[] args)
     {
-        Vector<Integer> ts = new Vector<Integer>(4);
-        ts.add(1);
-        ts.add(2);
-        ts.add(3);
-        for (int i =0;i<3;i++)
-        {
-            System.out.println(ts.get(i));
-        }
+        int key;
+        showInfo();
+        do {
+            Scanner scanner = new Scanner(System.in);
+             key = scanner.nextInt();
+            students = Dispose.resolve(students, key);
+        }while (key!=0);
     }
-
+    private static void showInfo(){
+        System.out.println("Welcome to Student Performance Management System (SPMS).\n1 - Add\n2 - Remove\n3 - Query\n4 - Show ranking\n5 -Show Statistics\n0 - Exit");
+    }
 }
