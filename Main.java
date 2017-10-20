@@ -1,125 +1,108 @@
-
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Scanner;
 
-
 /**
- * Created by max on 17-3-18.
+ * Created by 95112 on 10/15/2017.
  */
 public class Main {
-    public static void main(String[] arg)
+    public static void main(String[] args)
     {
-
         Scanner scanner = new Scanner(System.in);
-        int N = scanner.nextInt();
-        int[][] RC = new int[N][2];
-        ArrayList<Integer> x = new ArrayList<>();
-        ArrayList<Integer> y = new ArrayList<>();
-        ArrayList<Node> nodes = new ArrayList<>();
-        for (int i = 0 ; i<N;i++)
+        String input = scanner.next();
+        String output = "";
+        int start = 0 ;
+        int end = input.length() -1;
+        if (input.contains("-")) {
+            start = 1;
+            output = "-";
+        }
+
+        for (int i = input.length() -1 ; i >=start ;i-- )
         {
-            RC[i][0] =scanner.nextInt();
-            RC[i][1] =scanner.nextInt();
-            Node newNode = new Node(RC[i][0],RC[i][1]);
-            if (!x.contains(RC[i][0]))
-            {
-                x.add(RC[i][0]);
-            }
-            else
-            {
-                int key = 0;
-                for (int j = 0 ; j<nodes.size();j++)
+            output = output + input.charAt(i);
+        }
+        String deal = "";
+
+        if (output.contains("-"))
+        {
+         deal = "-";
+        }
+        int key = 0;
+        for (int i = start ; i < output.length();i++)
+        {
+            if (key == 1  )
+                deal = deal + output.charAt(i);
+            else {
+                if (output.charAt(i)!='0')
                 {
+                    deal = deal+output.charAt(i);
+                    key = 1;
+                }
+            }
+        }
+        output =deal;
+        if (output.contains("-")) {
+            if (output.length() == 1) {
+                System.out.println("0");
+                return;
+            }
+        }
+        else {
 
-                    Node tmp = nodes.get(j);
-                    if(tmp.x==RC[i][0]) {
-                        while (tmp.rightNode != null) {
-                            tmp = tmp.rightNode;
-                        }
-
-                        tmp.rightNode = newNode;
-                        key =1;
-                    }
-                    if (key ==1)
+            if (output.length()<1)
+            {
+                System.out.println("0");
+                return;
+            }
+            }
+        if (output.contains("-"))
+        {
+           if (output.length() > 11)
+               output = "0";
+           else if (output.length() == 11)
+           {
+               if (new Integer(output.charAt(1)+"")>2)
+                   output = "0";
+               else
+               {
+                   if (output.charAt(1)== '2') {
+                       String test = "";
+                       for (int i = 2; i < output.length(); i++) {
+                           test = test + output.charAt(i);
+                       }
+                       if (new Integer(test) > 147483648 )
+                           output = "0";
+                   }
+               }
+           }
+        }
+        else
+        {
+            if (output.length() > 10)
+                output = "0";
+            else if (output.length() == 10)
+            {
+                if (new Integer(output.charAt(0)+"") >2)
+                    output = "0";
+                else
+                {
+                    if (output.charAt(0) == '2')
                     {
-                        break;
-                    }
-                }
-            }
-            if (!y.contains(RC[i][1]))
-                y.add(RC[i][1]);
-            else
-            {
-                int key =0 ;
-                for (int j = 0 ; j<nodes.size();j++)
-                {
-                    Node tmp = nodes.get(j);
-                    if(tmp.y==RC[i][1]) {
-                        while (tmp.donwNode != null) {
-                            tmp = tmp.donwNode;
+                        String test = "";
+                        for (int i = 1; i < output.length(); i++) {
+                            test = test + output.charAt(i);
                         }
+                        if (new Integer(test) > 147483647 )
+                            output = "0";
 
-                        tmp.donwNode = newNode;
-                        key =1;
                     }
-                    if (key ==1)
-                        break;
-                }
-            }
-            nodes.add(newNode);
-        }
-        int answer = 0;
-        for (int i =0 ;i<nodes.size();i++)
-        {
-            int x_count= 1;
-            int y_count =1;
-            int z_count = 0;
-            Node aim = nodes.get(i);
-            Node aim_test1 = nodes.get(i);
-            Node aim_test2 = nodes.get(i);
-            while (aim_test1.rightNode!=null)
-            {
-                x_count++;
-                aim_test1 = aim_test1.rightNode;
-            }
-            while(aim_test2.donwNode!=null)
-            {
-                y_count++;
-                aim_test2 = aim_test2.donwNode;
-            }
-            for (int z = i+1 ;z<nodes.size();z++) {
-                Node test_node = nodes.get(z);
-                if (Math.abs(test_node.x - aim.x) == Math.abs(test_node.y - aim.y)) {
-                    System.out.println("aim:"+aim.x+","+aim.y+" "+"test:"+test_node.x+","+test_node.y);
-                    z_count++;
-
                 }
             }
 
-            answer = (answer+ jieci(x_count-1)+jieci(y_count-1)+z_count);
         }
-        System.out.println(answer);
+        System.out.println(output);
     }
-    static class Node{
-        public int x = 0 ;
-        public int y = 0 ;
-        public Node donwNode = null;
-        public Node rightNode = null;
-        public Node(int x,int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-    public static int jieci(int a)
-    {
-        if (a<1)
-        {
-            return 0;
-        }
-        int answer = 0;
-        for (int i= 1;i<=a;i++)
-            answer+=i;
-        return answer;
-    }
-
 }
+//7463847412
+//-8463847412
