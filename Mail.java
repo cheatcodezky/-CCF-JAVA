@@ -1,7 +1,7 @@
 /**
  * Created by 95112 on 2/15/2018.
  */
-public class Mail {
+public class Mail implements Cloneable{
     private String receiver;
     private String subject;
     private String appellation;
@@ -18,7 +18,16 @@ public class Mail {
     public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
-
+    @Override
+    public Mail clone(){
+        Mail mail = null;
+        try {
+            mail = (Mail) super.clone();
+        }catch (CloneNotSupportedException e){
+            e.printStackTrace();
+        }
+        return mail;
+    }
     public String getSubject() {
         return subject;
     }
