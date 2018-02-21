@@ -19,7 +19,7 @@ public class GreetingClient {
             out.writeUTF("hello from 192"+client.getLocalAddress());
             InputStream inputStream = client.getInputStream();
             DataInputStream dataInputStream = new DataInputStream(inputStream);
-            System.out.println("Server response:"+dataInputStream);
+            System.out.println("Server response:"+dataInputStream.readUTF());
             client.close();
         } catch (UnknownHostException e) {
             e.printStackTrace();
