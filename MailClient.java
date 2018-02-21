@@ -10,9 +10,10 @@ public class MailClient {
         Mail mail = new Mail(new AdvTemplate());
         mail.setTail("Bank reserve the power");
         while (i < MAX_COUNT){
-            mail.setAppellation(getRandString(5) + "Sir(Miss)");
-            mail.setReceiver(getRandString(8) + "Sir(Miss)");
-            sendMail(mail);
+            Mail cloneMail = mail.clone();
+            cloneMail.setAppellation(getRandString(5) + "Sir(Miss)");
+            cloneMail.setReceiver(getRandString(8) + "Sir(Miss)");
+            sendMail(cloneMail);
             i++;
         }
     }
@@ -28,6 +29,6 @@ public class MailClient {
         for (int j = 0 ; j < i;j++){
             sb.append(source.charAt(random.nextInt(source.length())));
         }
-        return sb.toString();   
+        return sb.toString();
     }
 }
