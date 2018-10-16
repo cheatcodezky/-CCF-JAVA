@@ -22,4 +22,7 @@ public class BookStore {
         }
 
     }
+    public void test(){
+    	System.out.println("Test publick key");
+    }
 }
